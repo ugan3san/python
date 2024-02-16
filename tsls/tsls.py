@@ -80,12 +80,14 @@ if __name__ == "__main__":
     # channel x
     x = Tsls()
     x.setinterval(10)
-    x.setlocation("/home/ganesanu/log/", "stomp-receive")
+    # x.setlocation("/home/ganesanu/log/", "stomp-receive")
+    x.setlocation("/tmp/", "stomp-receive")
 
     # channel y
     y = Tsls()
     y.setinterval(10)
-    y.setlocation("/home/ganesanu/log/", "stomp-transmit")
+    # y.setlocation("/home/ganesanu/log/", "stomp-transmit")
+    y.setlocation("/tmp/", "stomp-transmit")
 
     dt = datetime.fromtimestamp(int(time.time()))
     print("Date and time is:", dt)
