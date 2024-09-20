@@ -6,8 +6,9 @@ window = Tk()
 window.title("Button class app")
 
 
-def button_clicked():
+def button_clicked(x, y):
     print("Button clicked!")
+    print(x, y)
 
 
 class Buttons(Button):
@@ -16,7 +17,7 @@ class Buttons(Button):
         # Button.__init__(self, master)
         self.master = master
         self["text"] = text
-        self["command"] = command
+        self["command"] = lambda: command(self.x, self.y)
         self["font"] = ("Comic Sans", 30)
         # self['fg']="#7df9ff",
         # self['bg']="#FFFF00",
@@ -24,6 +25,8 @@ class Buttons(Button):
         # self['activebackground']="#FFFF00",
         # self['state']=ACTIVE,
         # self['compound']='bottom',
+        self.x = 0
+        self.y = 0
 
 
 upper_frame = Frame(
@@ -46,6 +49,9 @@ for i in range(len(barray)):
         k += 1
         barray[i][j].grid(row=i, column=j, pady=1, padx=1, sticky="NEWS")
         barray[i][j].config(text=str(k))
+        barray[i][j].x = i
+        barray[i][j].y = j
+
 
 window.geometry("400x400+50+10")
 window.minsize(400, 400)
