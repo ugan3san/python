@@ -42,17 +42,32 @@ upper_frame.columnconfigure(tuple(range(4)), weight=1)
 
 k = 0
 barray = [
-    [Buttons(upper_frame, "1", button_clicked) for x in range(4)] for y in range(4)
+    [Buttons(upper_frame, "1", button_clicked) for x in range(8)] for y in range(8)
 ]
 for i in range(len(barray)):
     for j in range(len(barray[i])):
         k += 1
         barray[i][j].grid(row=i, column=j, pady=1, padx=1, sticky="NEWS")
         barray[i][j].config(text=str(k))
-        barray[i][j].x = i
-        barray[i][j].y = j
+        barray[i][j].x = i  #x coordinate
+        barray[i][j].y = j  #y coordinate
+        barray[i][j].v = 0  #visit index
+        barray[i][j].h = 0  #heuristics
 
+(i,j) = (8,8)
 
-window.geometry("400x400+50+10")
-window.minsize(400, 400)
+for i in range(len(barray)):
+    for j in range(len(barray[i])):
+
+        count = 0
+        for x,y in [(2,1),(2,-1),(-2, 1), (-2, -1), (1,2),(1,-2),(-1, 2), (-1, -2)]:
+            #print(i+x,j+y)
+            if i+x>=0 and i+x<=7 and j+y>=0 and j+y<=7 and barray[i+x][j+y].h == 0: count += 1
+            #if barray[4][4] == 0: count += 1
+        print(count," ", end='')
+        if j == 7: print("\n")
+        
+
+window.geometry("600x600+50+10")
+window.minsize(600, 600)
 window.mainloop()
