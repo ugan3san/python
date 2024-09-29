@@ -5,10 +5,61 @@ from tkinter import *
 window = Tk()
 window.title("Button class app")
 
+class cBoard:
+    def __init__(self):
+        self.x = 0  # current y
+        self.y = 0  # current x
+        self.v = [[0 for x in range(8)] for y in range(8)]  # visited
+        self.h = [[0 for x in range(8)] for y in range(8)]  # heuristics
+        self.vmax = 0   # visited maximum
+
+    def print_h(self):
+        print("---")
+        for i in range(8):
+            for j in range(8):
+                print(self.h[i][j]," ", end='')
+            print("\n")
+
+    def print_v(self):
+        print("---")
+        for i in range(8):
+            for j in range(8):
+                print(self.v[i][j]," ", end='')
+            print("\n")
+
+    def set_current(self, x, y):
+        self.x = x
+        self.y = y
+
+    def mark_visited(self):
+        self.vmax += 1
+        self.v[self.x][self.y] = self.vmax
+
+    def move_next(self):
+        self.x = 3
+        self.y = 4
+
+    def update_h(self):
+        for i in range(8):
+            for j in range(8):
+                count = 0
+                for x,y in [(2,1),(2,-1),(-2, 1), (-2, -1), (1,2),(1,-2),(-1, 2), (-1, -2)]:
+                    if i+x>=0 and i+x<=7 and j+y>=0 and j+y<=7 and self.v[i+x][j+y] == 0: count += 1
+                self.h[i][j] = count
+
+
+board = cBoard()
+board.update_h()
+board.print_h()
+
+
 
 def button_clicked(x, y):
     print("Button clicked!")
     print(x, y)
+    board.set_current(x, y)
+    board.mark_visited()
+    board.print_v()
 
 
 class Buttons(Button):
@@ -54,19 +105,8 @@ for i in range(len(barray)):
         barray[i][j].v = 0  #visit index
         barray[i][j].h = 0  #heuristics
 
-(i,j) = (8,8)
 
-for i in range(len(barray)):
-    for j in range(len(barray[i])):
 
-        count = 0
-        for x,y in [(2,1),(2,-1),(-2, 1), (-2, -1), (1,2),(1,-2),(-1, 2), (-1, -2)]:
-            #print(i+x,j+y)
-            if i+x>=0 and i+x<=7 and j+y>=0 and j+y<=7 and barray[i+x][j+y].h == 0: count += 1
-            #if barray[4][4] == 0: count += 1
-        print(count," ", end='')
-        if j == 7: print("\n")
-        
 
 window.geometry("600x600+50+10")
 window.minsize(600, 600)
